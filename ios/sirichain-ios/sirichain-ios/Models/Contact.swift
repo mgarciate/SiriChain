@@ -25,7 +25,7 @@ final class Contact: Identifiable {
 extension Contact {
     static var dummyData: [Contact] {
         [
-            Contact(id: "id1", name: "George", address: "0x4Bfeed4Ff741aA38fdc43F57b80cc6FD4FcFEb0b"),
+            Contact(id: "id1", name: "Jorge", address: "mgarciate.eth"),
             Contact(id: "id2", name: "Alice", address: "0xE84cFa4A82727DeB74C02Fc5CDdbdc68AD48c0aa"),
             Contact(id: "id3", name: "Emily", address: "0x7c1e1cFC7869a4cFdCA54B4644EfAbCab19aE776"),
             Contact(id: "id4", name: "Bob", address: "0x62Bf7b5d80FAe8405B67Fb9eD4842C82Cb038a3E")
