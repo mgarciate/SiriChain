@@ -25,6 +25,7 @@ struct ContractsView: View {
                                 Text(contract.name)
                             }
                         }
+                        .onDelete(perform: delete)
                     }
                     .listStyle(.plain)
                 }
@@ -38,6 +39,9 @@ struct ContractsView: View {
                         Image(systemName: "plus")
                     }
                 }
+                ToolbarItem(placement: .automatic) {
+                    EditButton()
+                }
             }
         }
         .onAppear() {
@@ -45,6 +49,10 @@ struct ContractsView: View {
                 // TODO: Insert default values
             }
         }
+    }
+    
+    private func delete(at offsets: IndexSet) {
+        contracts.remove(atOffsets: offsets)
     }
 }
 

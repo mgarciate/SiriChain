@@ -26,6 +26,7 @@ struct ContactsView: View {
                                 Text(contact.name)
                             }
                         }
+                        .onDelete(perform: delete)
                     }
                     .listStyle(.plain)
                 }
@@ -39,6 +40,9 @@ struct ContactsView: View {
                         Image(systemName: "plus")
                     }
                 }
+                ToolbarItem(placement: .automatic) {
+                    EditButton()
+                }
             }
         }
         .onAppear() {
@@ -46,6 +50,10 @@ struct ContactsView: View {
                 // TODO: Insert default values
             }
         }
+    }
+    
+    private func delete(at offsets: IndexSet) {
+        contacts.remove(atOffsets: offsets)
     }
 }
 
