@@ -22,7 +22,14 @@ struct ContractsView: View {
                             NavigationLink {
                                 Text(contract.name)
                             } label: {
-                                Text(contract.name)
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(contract.name)
+                                        Text(contract.address)
+                                            .font(.caption)
+                                            .opacity(0.7)
+                                    }
+                                }
                             }
                         }
                         .onDelete(perform: delete)

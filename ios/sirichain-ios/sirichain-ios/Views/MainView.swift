@@ -17,12 +17,12 @@ struct MainView: View {
                 NavigationLink {
                     ContactsView()
                 } label: {
-                    Label("Contacts", systemImage: "person.2")
+                    ItemView(systemImage: "person.crop.circle.fill", title: "Contacts", subtitle: "Count:", value: 4)
                 }
                 NavigationLink {
                     ContractsView()
                 } label: {
-                    Label("Contracts", systemImage: "doc.text")
+                    ItemView(systemImage: "document.circle.fill", title: "Functions on-chain", subtitle: "Count:", value: 5)
                 }
             }
             .listStyle(.plain)
@@ -47,4 +47,40 @@ struct MainView: View {
 
 #Preview {
     MainView()
+}
+
+struct ItemView: View {
+    let systemImage: String
+    let title: String
+    let subtitle: String
+    let value: Int
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(red: 245 / 255, green: 127 / 255, blue: 23 / 255))
+                .shadow(radius: 5)
+            HStack(spacing: 10) {
+                Image(systemName: systemImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 40)
+                ZStack {
+                    VStack(alignment: .leading) {
+                        Text(title)
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                        HStack(alignment: .bottom, spacing: 5) {
+                            Text(subtitle)
+                                .font(.caption.italic())
+                            Text("\(value)")
+                                .font(.subheadline.bold())
+                            Spacer()
+                        }
+                        .foregroundStyle(.white.opacity(0.7))
+                    }
+                }
+            }
+            .padding()
+        }
+    }
 }

@@ -23,7 +23,14 @@ struct ContactsView: View {
                             NavigationLink {
                                 Text(contact.name)
                             } label: {
-                                Text(contact.name)
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(contact.name)
+                                        Text(contact.address)
+                                            .font(.caption)
+                                            .opacity(0.7)
+                                    }
+                                }
                             }
                         }
                         .onDelete(perform: delete)
