@@ -7,6 +7,7 @@
 
 import Foundation
 
-//let scrollSepoliaUrl = URL(string: "// https://sepolia-rpc.scroll.io")!
-//let privateKey = "" // Add your own private key
+// let scrollSepoliaUrl = URL(string: "https://sepolia-rpc.scroll.io")!
+// let mainnetUrl = URL(string: "https://eth.llamarpc.com")!
+// let privateKey = "" // Add your own private key
 // let publicKey = "" // Add your own public key

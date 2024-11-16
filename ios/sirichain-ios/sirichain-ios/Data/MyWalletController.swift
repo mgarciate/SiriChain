@@ -32,6 +32,7 @@ enum SiriChainWalletError: Error {
 public class SiriChainWalletController {
     let account: EthereumAccount?
     let client: EthereumHttpClient
+    let mainnetClient: EthereumHttpClient
 
     init(clientUrl: URL) {
         // TODO: Change
@@ -48,6 +49,7 @@ public class SiriChainWalletController {
         account = try? EthereumAccount.importAccount(replacing: keyStorage, privateKey: privateKey, keystorePassword: password)
         // TODO: move to a configuration file
         client = EthereumHttpClient(url: clientUrl, network: .fromString(ScrollNetwork.sepolia.stringValue))
+        mainnetClient = EthereumHttpClient(url: mainnetUrl, network: .mainnet)
     }
     
     func getNonce() async throws -> Int {
@@ -73,7 +75,8 @@ public class SiriChainWalletController {
 //        EthereumTransaction(from: nil, to: "0x3c1bd6b420448cf16a389c8b0115ccb3660bb854", value: BigUInt(1), data: nil, nonce: 2, gasPrice: gasPrice ?? BigUInt(9000000), gasLimit: BigUInt(30000), chainId: EthereumNetwork)
         let nonce = try await getNonce()
         let gasPrice = try await client.eth_gasPrice()
-        let transaction = EthereumTransaction(from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(150000000000000), data: nil, nonce: nonce, gasPrice: gasPrice, gasLimit: BigUInt(50000), chainId: ScrollNetwork.sepolia.intValue)
+        let to = await resolveAddress(destinationAddress)
+        let transaction = EthereumTransaction(from: account.address, to: EthereumAddress(to), value: BigUInt(150000000000000), data: nil, nonce: nonce, gasPrice: gasPrice, gasLimit: BigUInt(50000), chainId: ScrollNetwork.sepolia.intValue)
         let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
         return txHash
     }
@@ -83,9 +86,19 @@ public class SiriChainWalletController {
             throw SiriChainWalletError.noAccount
         }
         let gasPrice = try await client.eth_gasPrice()
-        let function = Transfer(contract: EthereumAddress(token.address), from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(160000000000000), data: Data(), gasPrice: gasPrice, gasLimit: BigUInt(100000))
+        let to = await resolveAddress(destinationAddress)
+        let function = Transfer(contract: EthereumAddress(token.address), from: account.address, to: EthereumAddress(to), value: BigUInt(160000000000000), data: Data(), gasPrice: gasPrice, gasLimit: BigUInt(100000))
         let transaction = try function.transaction()
         let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
         return txHash
+    }
+    
+    private func resolveAddress(_ address: String) async -> String {
+        let nameService = EthereumNameService(client: mainnetClient)
+        
+        return (try? await nameService.resolve(
+            ens: address,
+            mode: .allowOffchainLookup
+        ))?.asString() ?? address
     }
 }
