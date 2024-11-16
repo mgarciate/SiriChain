@@ -28,6 +28,18 @@ struct ContractsView: View {
                                         Text(contract.address)
                                             .font(.caption)
                                             .opacity(0.7)
+                                        HStack(alignment: .top) {
+                                            Text("Functions:")
+                                                .font(.caption)
+                                            VStack(alignment: .leading) {
+                                                ForEach(contract.functions, id:\.self) { function in
+                                                    Text(function)
+                                                        .font(.caption)
+                                                        .opacity(0.7)
+                                                }
+                                            }
+                                        }
+                                        .padding([.top], 2)
                                     }
                                 }
                             }
