@@ -25,6 +25,28 @@ struct Transfer: ABIFunction {
     }
 }
 
+struct ClaimReward: ABIFunction {
+    static let name = "claimReward"
+    let contract: EthereumAddress
+    let from: EthereumAddress?
+    let gasPrice: BigUInt?
+    let gasLimit: BigUInt?
+    
+    public func encode(to encoder: ABIFunctionEncoder) throws {
+    }
+}
+
+struct CheckBalance: ABIFunction {
+    static let name = "checkBalance"
+    let contract: EthereumAddress
+    let from: EthereumAddress?
+    let gasPrice: BigUInt?
+    let gasLimit: BigUInt?
+    
+    public func encode(to encoder: ABIFunctionEncoder) throws {
+    }
+}
+
 enum SiriChainWalletError: Error {
     case noAccount
 }
@@ -88,6 +110,32 @@ public class SiriChainWalletController {
         let gasPrice = try await client.eth_gasPrice()
         let to = await resolveAddress(destinationAddress)
         let function = Transfer(contract: EthereumAddress(token.address), from: account.address, to: EthereumAddress(to), value: BigUInt(amount * etherInWei), data: Data(), gasPrice: gasPrice, gasLimit: BigUInt(100000))
+        let transaction = try function.transaction()
+        let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
+        return txHash
+    }
+    
+    func balance() async throws -> BigUInt {
+        guard let account = account else {
+            throw SiriChainWalletError.noAccount
+        }
+        let gasPrice = try await client.eth_gasPrice()
+        let function = ClaimReward(contract: EthereumAddress("0x6F9177CaA58a82ed3aE0491ededF4e6be8be5617"), from: account.address, gasPrice: gasPrice, gasLimit: BigUInt(100000))
+        let transaction = try function.transaction()
+        let data = try await client.eth_sendRawTransaction(transaction, withAccount: account)
+        if let balanceHex = data as? String, let balance = BigUInt(hex: balanceHex) {
+            return balance
+        } else {
+            throw EthereumClientError.noResultFound
+        }
+    }
+    
+    func claimReward() async throws -> String {
+        guard let account = account else {
+            throw SiriChainWalletError.noAccount
+        }
+        let gasPrice = try await client.eth_gasPrice()
+        let function = ClaimReward(contract: EthereumAddress("0x6F9177CaA58a82ed3aE0491ededF4e6be8be5617"), from: account.address, gasPrice: gasPrice, gasLimit: BigUInt(100000))
         let transaction = try function.transaction()
         let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
         return txHash

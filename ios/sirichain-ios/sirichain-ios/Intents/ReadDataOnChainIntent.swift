@@ -20,11 +20,7 @@ struct ReadDataOnChainIntent: AppIntent {
     
     func perform() async throws -> some IntentResult {
         let walletController = SiriChainWalletController(clientUrl: scrollSepoliaUrl)
-//        if token.type == .stable {
-//            let txHash = try await walletController.transfer(to: contact.address, amount: amount, token: token)
-//        } else {
-//            let txHash = try await walletController.transfer(to: contact.address, amount: amount)
-//        }
+        let balance = try await walletController.balance()
         return .result()
     }
 }

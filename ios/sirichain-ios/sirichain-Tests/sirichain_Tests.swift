@@ -68,4 +68,14 @@ final class sirichain_Tests: XCTestCase {
         let gasPrice = try await walletController.getGasPrice()
         XCTAssertTrue(gasPrice > 0)
     }
+    
+    func testSCGBalance() async throws {
+        let balance = try await walletController.balance()
+        XCTAssertTrue(balance > 0)
+    }
+    
+    func testClaimReward() async throws {
+        let txHash = try await walletController.claimReward()
+        XCTAssertNotNil(txHash)
+    }
 }
