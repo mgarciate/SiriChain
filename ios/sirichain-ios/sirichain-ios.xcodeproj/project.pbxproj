@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		09E03E9F2CE8874C001EF33A /* web3-zksync.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 09E03E9E2CE8874C001EF33A /* web3-zksync.swift */; };
+		09E03EA12CE8874C001EF33A /* web3.swift in Frameworks */ = {isa = PBXBuildFile; productRef = 09E03EA02CE8874C001EF33A /* web3.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		09E03D8E2CE7C058001EF33A /* sirichain-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sirichain-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09E03EA12CE8874C001EF33A /* web3.swift in Frameworks */,
+				09E03E9F2CE8874C001EF33A /* web3-zksync.swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "sirichain-ios";
 			packageProductDependencies = (
+				09E03E9E2CE8874C001EF33A /* web3-zksync.swift */,
+				09E03EA02CE8874C001EF33A /* web3.swift */,
 			);
 			productName = "sirichain-ios";
 			productReference = 09E03D8E2CE7C058001EF33A /* sirichain-ios.app */;
@@ -94,6 +103,9 @@
 			);
 			mainGroup = 09E03D852CE7C058001EF33A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				09E03E9D2CE8874C001EF33A /* XCRemoteSwiftPackageReference "web3" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 09E03D8F2CE7C058001EF33A /* Products */;
 			projectDirPath = "";
@@ -177,7 +189,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -234,7 +246,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -332,6 +344,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		09E03E9D2CE8874C001EF33A /* XCRemoteSwiftPackageReference "web3" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argentlabs/web3.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		09E03E9E2CE8874C001EF33A /* web3-zksync.swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09E03E9D2CE8874C001EF33A /* XCRemoteSwiftPackageReference "web3" */;
+			productName = "web3-zksync.swift";
+		};
+		09E03EA02CE8874C001EF33A /* web3.swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09E03E9D2CE8874C001EF33A /* XCRemoteSwiftPackageReference "web3" */;
+			productName = web3.swift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 09E03D862CE7C058001EF33A /* Project object */;
 }
