@@ -9,7 +9,7 @@ import AppIntents
 
 struct SendPaymentIntent: AppIntent {
     
-    static var title = LocalizedStringResource("Send a payment to:")
+    static var title = LocalizedStringResource("Send a payment to")
     static var description: IntentDescription? = "Send a payment to a selected contact using one of your wallet's tokens quickly. Choose the token and amount, and complete the transfer easily."
     
     @Parameter(title: "Contact")
