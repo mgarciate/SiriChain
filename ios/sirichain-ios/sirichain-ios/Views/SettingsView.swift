@@ -11,16 +11,16 @@ final class SettingsViewModel: ObservableObject {
     @Published var privateKey: String
     
     init() {
-        privateKey = KeychainHelper.shared.retrieveApiKey(
-            service: KeychainHelper.service,
+        privateKey = KeychainHelper.shared.retrieveKey(
+            service: KeychainHelper.servicePrivateKey,
             account: KeychainHelper.account
         ) ?? ""
     }
     
     func save() {
-        _ = KeychainHelper.shared.savePrivateKey(
+        _ = KeychainHelper.shared.saveKey(
             privateKey,
-            service: KeychainHelper.service,
+            service: KeychainHelper.servicePrivateKey,
             account: KeychainHelper.account
         )
     }

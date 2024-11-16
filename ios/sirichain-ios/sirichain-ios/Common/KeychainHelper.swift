@@ -9,19 +9,20 @@ import Foundation
 import Security
 
 class KeychainHelper: @unchecked Sendable {
-    static let teamId = "ZR272F7CTF"
+    static let teamId = "M3XA3ETRDV"
     static let accessGroup = "\(teamId).com.mgarciate.sirichain"
     // TODO: remove this static value
-    static let service = "api-key"
+    static let servicePrivateKey = "privatekey"
+    static let serviceKeystorePassword = "keystorepassword"
     static let account = "Wallet1"
     
     static let shared = KeychainHelper()
 
     private init() {}
 
-    func savePrivateKey(_ privateKey: String, service: String, account: String) -> Bool {
+    func saveKey(_ privateKey: String, service: String, account: String) -> Bool {
 #if DEBUG
-        print("savePrivateKey: \(privateKey)")
+        print("saveKey: \(service)")
 #endif
         let data = Data(privateKey.utf8)
 
@@ -40,9 +41,9 @@ class KeychainHelper: @unchecked Sendable {
         return status == errSecSuccess
     }
 
-    func retrieveApiKey(service: String, account: String) -> String? {
+    func retrieveKey(service: String, account: String) -> String? {
 #if DEBUG
-        print("retrieveApiKey")
+        print("retrieveKey: \(service)")
 #endif
         let query = [
             kSecClass: kSecClassGenericPassword,
