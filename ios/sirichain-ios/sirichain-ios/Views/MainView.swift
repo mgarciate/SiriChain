@@ -7,40 +7,70 @@
 
 import SwiftUI
 
+final class MainViewModel: ObservableObject {
+    @Published var address: String = ""
+    
+    func reloadWallet() {
+        let walletController = SiriChainWalletController(clientUrl: scrollSepoliaUrl)
+        address = walletController.account?.address.asString() ?? ""
+    }
+}
+
 struct MainView: View {
     @State var navigationPath = NavigationPath()
+    @StateObject var viewModel = MainViewModel()
     @State private var isSettingsPresented = false
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
-            List {
-                NavigationLink {
-                    ContactsView()
-                } label: {
-                    ItemView(systemImage: "person.crop.circle.fill", title: "Contacts", subtitle: "Count:", value: 4)
-                }
-                NavigationLink {
-                    ContractsView()
-                } label: {
-                    ItemView(systemImage: "document.circle.fill", title: "Functions on-chain", subtitle: "Count:", value: 5)
-                }
-            }
-            .listStyle(.plain)
-            .navigationTitle("Siri Chain")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        isSettingsPresented = true
+            VStack {
+                List {
+                    NavigationLink {
+                        ContactsView()
                     } label: {
-                        Image(systemName: "gear")
+                        ItemView(systemImage: "person.crop.circle.fill", title: "Contacts", subtitle: "Count:", value: 4)
                     }
+                    NavigationLink {
+                        ContractsView()
+                    } label: {
+                        ItemView(systemImage: "document.circle.fill", title: "Functions on-chain", subtitle: "Count:", value: 5)
+                    }
+                }
+                .listStyle(.plain)
+                .navigationTitle("Siri Chain")
+                .toolbar {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            isSettingsPresented = true
+                        } label: {
+                            Image(systemName: "gear")
+                        }
+                    }
+                }
+                if !viewModel.address.isEmpty {
+                    Text(viewModel.address)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .background(.red.opacity(0.8))
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(.white)
+                        .cornerRadius(20)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.red, lineWidth: 2)
+                                .padding(.leading, 1)
+                        )
+                        .frame(height: 40)
                 }
             }
         }
         .fullScreenCover(isPresented: $isSettingsPresented, onDismiss: {
-            // TODO: do something?
+            viewModel.reloadWallet()
         }) {
             SettingsView()
+        }
+        .onAppear {
+            viewModel.reloadWallet()
         }
     }
 }
