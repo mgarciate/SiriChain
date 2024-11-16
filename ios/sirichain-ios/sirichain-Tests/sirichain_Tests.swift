@@ -27,6 +27,17 @@ final class sirichain_Tests: XCTestCase {
         walletController = SiriChainWalletController(clientUrl: url)
     }
     
+    override func tearDown() {
+        _ = KeychainHelper.shared.deleteApiKey(
+            service: KeychainHelper.servicePrivateKey,
+            account: KeychainHelper.account
+        )
+        _ = KeychainHelper.shared.deleteApiKey(
+            service: KeychainHelper.serviceKeystorePassword,
+            account: KeychainHelper.account
+        )
+    }
+    
     override class func tearDown() {
         _ = KeychainHelper.shared.deleteApiKey(
             service: KeychainHelper.servicePrivateKey,
