@@ -16,13 +16,15 @@ struct SendPaymentIntent: AppIntent {
     var contact: Contact
     @Parameter(title: "Coin")
     var token: NetworkToken
+    @Parameter(title: "Amount")
+    var amount: Double
     
     func perform() async throws -> some IntentResult {
         let walletController = SiriChainWalletController(clientUrl: scrollSepoliaUrl)
         if token.type == .stable {
-            let txHash = try await walletController.transfer(to: contact.address, amount: 0.01)
+            let txHash = try await walletController.transfer(to: contact.address, amount: amount, token: token)
         } else {
-            let txHash = try await walletController.transfer(to: contact.address, amount: 0.01)
+            let txHash = try await walletController.transfer(to: contact.address, amount: amount)
         }
         return .result()
     }

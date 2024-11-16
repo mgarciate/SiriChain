@@ -49,11 +49,12 @@ extension NetworkToken: AppEntity {
 
 struct NetworkTokenQuery: EntityQuery {
     func entities(for identifiers: [String]) async throws -> [NetworkToken] {
-        NetworkToken.all.filter { networkToken in
+        let tokens = NetworkToken.all.filter { networkToken in
             identifiers.contains { identifier in
-                networkToken.name.lowercased().contains(identifier.lowercased())
+                networkToken.name.lowercased() == identifier.lowercased()
             }
         }
+        return tokens
     }
     
     func suggestedEntities() async throws -> [NetworkToken] {
