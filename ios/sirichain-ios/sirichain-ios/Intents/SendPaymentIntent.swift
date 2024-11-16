@@ -9,14 +9,21 @@ import AppIntents
 
 struct SendPaymentIntent: AppIntent {
     
-    static var title = LocalizedStringResource("Send Payment")
+    static var title = LocalizedStringResource("Send a payment to:")
     static var description: IntentDescription? = "Send a payment to a selected contact using one of your wallet's tokens quickly. Choose the token and amount, and complete the transfer easily."
     
-    @Parameter(title: "Select a Contact")
+    @Parameter(title: "Contact")
     var contact: Contact
+    @Parameter(title: "Coin")
+    var token: NetworkToken
     
     func perform() async throws -> some IntentResult {
-        // TODO: do something on-chain
+        let walletController = SiriChainWalletController(clientUrl: scrollSepoliaUrl)
+        if token.type == .stable {
+            let txHash = try await walletController.transfer(to: contact.address, amount: 0.01)
+        } else {
+            let txHash = try await walletController.transfer(to: contact.address, amount: 0.01)
+        }
         return .result()
     }
 }

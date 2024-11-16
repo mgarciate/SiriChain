@@ -57,7 +57,7 @@ public class SiriChainWalletController {
 //        EthereumTransaction(from: nil, to: "0x3c1bd6b420448cf16a389c8b0115ccb3660bb854", value: BigUInt(1), data: nil, nonce: 2, gasPrice: gasPrice ?? BigUInt(9000000), gasLimit: BigUInt(30000), chainId: EthereumNetwork)
         let nonce = try await getNonce()
         let gasPrice = try await client.eth_gasPrice()
-        let transaction = EthereumTransaction(from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(1), data: nil, nonce: nonce, gasPrice: gasPrice, gasLimit: BigUInt(50000), chainId: ScrollNetwork.sepolia.intValue)
+        let transaction = EthereumTransaction(from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(150000000000000), data: nil, nonce: nonce, gasPrice: gasPrice, gasLimit: BigUInt(50000), chainId: ScrollNetwork.sepolia.intValue)
         let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
         return txHash
     }
