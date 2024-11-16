@@ -44,12 +44,12 @@ final class sirichain_Tests: XCTestCase {
     }
     
     func testTransferEth() async throws {
-        let txHash = try await walletController.transfer(to: Contact.dummyData[0].address, amount: 0.01)
+        let txHash = try await walletController.transfer(to: Contact.dummyData[0].address, amount: 0.0056)
         XCTAssertNotNil(txHash)
     }
     
     func testTransferERC20() async throws {
-        let txHash = try await walletController.transfer(to: Contact.dummyData[0].address, amount: 10, token: NetworkToken.all[1])
+        let txHash = try await walletController.transfer(to: Contact.dummyData[0].address, amount: 15, token: NetworkToken.all[1])
         XCTAssertNotNil(txHash)
     }
 
