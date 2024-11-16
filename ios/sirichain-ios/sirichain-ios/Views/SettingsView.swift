@@ -49,6 +49,7 @@ struct SettingsView: View {
                             apikeyPopoverPresented = true
                         } label: {
                             Image(systemName: "info.circle")
+                                .foregroundStyle(Color.yellow)
                         }
                         .buttonStyle(PlainButtonStyle())
                         .foregroundStyle(.blue)

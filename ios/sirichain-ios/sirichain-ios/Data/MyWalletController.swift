@@ -9,6 +9,22 @@ import Foundation
 import web3
 import BigInt
 
+struct Transfer: ABIFunction {
+    static let name = "transfer"
+    let contract: EthereumAddress
+    let from: EthereumAddress?
+    let to: EthereumAddress
+    let value: BigUInt
+    let data: Data
+    let gasPrice: BigUInt?
+    let gasLimit: BigUInt?
+    
+    public func encode(to encoder: ABIFunctionEncoder) throws {
+        try encoder.encode(to)
+        try encoder.encode(value)
+    }
+}
+
 enum SiriChainWalletError: Error {
     case noAccount
 }
@@ -58,6 +74,17 @@ public class SiriChainWalletController {
         let nonce = try await getNonce()
         let gasPrice = try await client.eth_gasPrice()
         let transaction = EthereumTransaction(from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(150000000000000), data: nil, nonce: nonce, gasPrice: gasPrice, gasLimit: BigUInt(50000), chainId: ScrollNetwork.sepolia.intValue)
+        let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
+        return txHash
+    }
+    
+    func transfer(to destinationAddress: String, amount: Double, token: NetworkToken) async throws -> String {
+        guard let account = account else {
+            throw SiriChainWalletError.noAccount
+        }
+        let gasPrice = try await client.eth_gasPrice()
+        let function = Transfer(contract: EthereumAddress(token.address), from: account.address, to: EthereumAddress(destinationAddress), value: BigUInt(160000000000000), data: Data(), gasPrice: gasPrice, gasLimit: BigUInt(100000))
+        let transaction = try function.transaction()
         let txHash = try await client.eth_sendRawTransaction(transaction, withAccount: account)
         return txHash
     }
