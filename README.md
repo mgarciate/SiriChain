@@ -1,5 +1,7 @@
 # Siri Chain
 
+<img src="./resources/logo.png?raw=true" alt="team image" width="360" style="display: block; margin: 20 auto"/>
+
 Siri Chain is an innovative integration that enables Siri to interact directly with real-time blockchain data. By leveraging Siri's voice capabilities, users can query and manage information from decentralized applications (DApps), providing a seamless, voice-activated blockchain experience.
 
 ## Features
@@ -7,6 +9,13 @@ Siri Chain is an innovative integration that enables Siri to interact directly w
 - **Voice-Activated Blockchain Interaction**: Utilize Siri to perform tasks such as checking token balances, verifying transaction statuses, and interacting with smart contracts in real-time.
 - **Custom Shortcuts**: Add personalized shortcuts to your iPhone for quick access to specific Siri Chain actions.
 - **Secure Transactions**: Conduct blockchain transactions securely with a wallet stored on your device, ensuring private keys remain safe.
+
+<img src="./resources/SiriDiagram.drawio.png?raw=true" alt="team image" width="480" style="display: block; margin: 20 auto"/>
+
+## Apple Watch Compatibility
+
+Siri Chain extends its functionality to the Apple Watch, enabling users to access blockchain data and perform transactions directly from their wrist. By utilizing the AppIntents framework, Siri Chain integrates seamlessly with the Apple Watch interface, providing a convenient and secure way to manage digital assets on the go. This compatibility ensures that users can stay connected to their blockchain activities, even when their iPhone is not readily accessible.
+
 
 ## Setup Instructions
 
